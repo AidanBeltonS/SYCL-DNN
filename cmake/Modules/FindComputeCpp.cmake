@@ -47,7 +47,12 @@ endif()
 
 set(SYCL_LANGUAGE_VERSION "2017" CACHE STRING "SYCL version to use. Defaults to 1.2.1.")
 
-find_package(OpenCL REQUIRED)
+# Alows for strict handling of finding OpenCL within FindComputeCPP.cmake but allows
+# user to specify the FindComputeCPP fails quietly or not.
+find_package(OpenCL QUIET)
+if (NOT OpenCL_FOUND)
+    return()
+endif()
 
 # Find ComputeCpp package
 set(computecpp_find_hint
